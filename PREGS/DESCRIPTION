@@ -1,0 +1,13 @@
+Package: PREGS
+Type: Package
+Title: What the package does (short line)
+Version: 1.0
+Date: 2023-07-31
+Author: Who wrote it
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+Imports: Rcpp (>= 1.0.10), MASS, RSpectra, gaoptim
+LinkingTo: Rcpp, RcppArmadillo
+Encoding: UTF-8
+RoxygenNote: 7.2.3

@@ -33,24 +33,27 @@ set.seed(2024)
 seeds = sample(1:100000, iter, replace = F)
 results = list()
 results[["pvalues"]] = list()
-for(it in 1:iter){
-  print(paste0("#########", it, "############"))
-  dat = data_gen(n=as.integer(args$n), p = as.integer(args$p), M = 100, design =args$D, noise = args$E,seed = seeds[it])
-  if(as.numeric(args$S) <=0.0){
-    dat$beta = 0.0
-  }else{
-    dat$beta  = beta_gen(dat$x, dat$Z, dat$epsMat, power = as.numeric(args$S))
-  }
-  dat$y = y_gen(dat$x, dat$beta, dat$epsMat)
-  results[["pvalues"]][[it]] = sim_comparisons_singleSetting(dat, B = 100)
-}
-
-lapply(results[["pvalues"]], function(z)  apply(z[["twosided"]]<=0.05,2,mean))
 results[["setting"]] =args
 if(args$S<=0.0){
   result_file_name = paste(args$D, args$E, args$n, args$p, "null.Rdata", sep="_")
 }else{
   result_file_name = paste(args$D, args$E, args$n, args$p, "alternative.Rdata",sep="_")
 }
+path = "/home/lg689/project/project/PairedRegression/Results/"
 
-saveRDS(results, file = paste0("results/",result_file_name))
+for(it in 1:iter){
+  print(paste0("#########", it, "############"))
+  dat = data_gen(n=as.integer(args$n), p = as.integer(args$p), M = 2000, design =args$D, noise = args$E,seed = seeds[it])
+  if(as.numeric(args$S) <=0.0){
+    dat$beta = 0.0
+  }else{
+    dat$beta  = beta_gen(dat$x, dat$Z, dat$epsMat, power = as.numeric(args$S))
+  }
+  dat$y = y_gen(dat$x, dat$beta, dat$epsMat)
+  results[["pvalues"]][[it]] = sim_comparisons_singleSetting(dat, B = 2000)
+
+  apply(results[["pvalues"]][[it]][["twosided"]]<=0.05,2,mean)
+  apply(results[["pvalues"]][[it]][["twosided"]]<=0.01,2,mean)
+  saveRDS(results, file = paste0(path,result_file_name))
+}
+

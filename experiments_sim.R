@@ -28,7 +28,7 @@ cat(messages[4], args$E, "\n")
 cat(messages[5], args$S, "\n")
 
 
-iter = 1
+iter = 20
 set.seed(2024)
 seeds = sample(1:100000, iter, replace = F)
 results = list()

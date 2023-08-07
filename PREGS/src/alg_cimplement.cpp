@@ -201,15 +201,19 @@ List permutation_simple_C(arma::mat X, arma::vec yresid, arma::mat U, arma::umat
       pvals(ii) += 1;
     }
     
-    arma::uvec ii1 = find(tval <= tval_b);
-    arma::uvec ii2 = find(tval >= tval_b);
-    
+    arma::uvec ii1 = find(tval < tval_b);
+    arma::uvec ii2 = find(tval > tval_b);
+    arma::uvec ii3 = find(tval == tval_b);
     if(!ii1.is_empty()){
       pvals_pos(ii1) += 1;
     }
     
     if(!ii2.is_empty()){
       pvals_neg(ii2) += 1;
+    }
+
+    if(!ii3.is_empty()){
+
     }
   }
   

@@ -1,0 +1,44 @@
+sample size 100 
+num of features in Z 5 
+design AnovaBalance 
+noise/error cauchy 
+signal/power 0 
+[1] "#########1############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.0455         0.0450         0.0370         0.0355         0.0310 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0505         0.0495         0.0550         0.0480         0.0395 
+cyclicRandom01 
+        0.0505 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.0055         0.0080         0.0035         0.0035         0.0045 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0105         0.0050 
+cyclicRandom01 
+        0.0090 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.0005         0.0015         0.0010         0.0010         0.0005 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+[1] "#########2############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.0495         0.0480         0.0380         0.0415         0.0370 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0505         0.0595         0.0515         0.0575         0.0550 
+cyclicRandom01 
+        0.0460 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.0050         0.0070         0.0040         0.0050         0.0035 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0170         0.0110 
+cyclicRandom01 
+        0.0090 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.0005         0.0005         0.0005         0.0005         0.0015 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+[1] "#########3############"

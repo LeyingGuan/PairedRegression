@@ -1,0 +1,44 @@
+sample size 100 
+num of features in Z 5 
+design Cauchy 
+noise/error cauchy 
+signal/power 0.9 
+[1] "#########1############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+             1              1              1              1              1 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+             1              1              1              0              0 
+cyclicRandom01 
+             0 
+         ttest             FL          PRegs      PRegsCoef           perm 
+             1              1              1              1              1 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+             0              0              0              0              0 
+cyclicRandom01 
+             0 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        1.0000         1.0000         0.9385         0.9405         1.0000 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+[1] "#########2############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+             1              1              1              1              1 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+             1              1              1              0              0 
+cyclicRandom01 
+             0 
+         ttest             FL          PRegs      PRegsCoef           perm 
+             1              1              1              1              1 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+             0              0              0              0              0 
+cyclicRandom01 
+             0 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        1.0000         1.0000         0.9705         0.9705         1.0000 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+[1] "#########3############"

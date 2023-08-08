@@ -1,0 +1,44 @@
+sample size 100 
+num of features in Z 2 
+design Cauchy 
+noise/error exponential 
+signal/power 0.9 
+[1] "#########1############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.9395         0.9255         0.9055         0.9090         0.9195 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.6845         0.6880         0.3135         0.0455         0.0305 
+cyclicRandom01 
+        0.0680 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.7340         0.4040         0.3660         0.3715         0.4100 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0070         0.0040 
+cyclicRandom01 
+        0.0145 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.4015         0.1525         0.0900         0.0780         0.1600 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+[1] "#########2############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.9075         0.8995         0.8910         0.8900         0.8980 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.6475         0.6400         0.5285         0.2125         0.0535 
+cyclicRandom01 
+        0.0440 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.8100         0.4580         0.4265         0.4360         0.4625 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0615         0.0140 
+cyclicRandom01 
+        0.0130 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.5385         0.1265         0.0755         0.0680         0.1365 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+[1] "#########3############"

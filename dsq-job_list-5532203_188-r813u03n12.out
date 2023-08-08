@@ -1,0 +1,25 @@
+sample size 100 
+num of features in Z 5 
+design AnovaUnbalance 
+noise/error multinomial 
+signal/power 0.9 
+[1] "#########1############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+        1.0000         1.0000         0.7270         0.7315         1.0000 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0475         0.0480         0.0455         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        1.0000         1.0000         0.0345         0.0405         0.4885 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+         ttest             FL          PRegs      PRegsCoef           perm 
+             1              1              0              0              0 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+             0              0              0              0              0 
+cyclicRandom01 
+             0 
+[1] "#########2############"

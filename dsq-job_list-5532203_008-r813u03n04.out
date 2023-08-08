@@ -1,0 +1,10 @@
+sample size 100 
+num of features in Z 5 
+design AnovaBalance 
+noise/error gaussian 
+signal/power 0.9 
+[1] "#########1############"
+Error in model.frame.default(formula = epsMat ~ x + Z, drop.unused.levels = TRUE) : 
+  variable lengths differ (found for 'x')
+Calls: beta_gen ... lm -> eval -> eval -> <Anonymous> -> model.frame.default
+Execution halted

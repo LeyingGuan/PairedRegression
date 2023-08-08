@@ -1,0 +1,63 @@
+sample size 100 
+num of features in Z 2 
+design Gaussian 
+noise/error exponential 
+signal/power 0.9 
+[1] "#########1############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.9040         0.9035         0.8995         0.8985         0.9030 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.6330         0.6770         0.5875         0.1130         0.1170 
+cyclicRandom01 
+        0.0695 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.7495         0.7480         0.7350         0.7395         0.7485 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0305         0.0305 
+cyclicRandom01 
+        0.0150 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.4815         0.4720         0.4465         0.4495         0.4725 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+[1] "#########2############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.8895         0.8890         0.8870         0.8840         0.8870 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.6780         0.5185         0.6985         0.0590         0.0395 
+cyclicRandom01 
+        0.0435 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.7485         0.7370         0.7215         0.7275         0.7330 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0145         0.0100 
+cyclicRandom01 
+        0.0080 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.4935         0.4385         0.4225         0.4210         0.4415 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+[1] "#########3############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.9045         0.9020         0.8975         0.8975         0.9050 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.6820         0.6570         0.6810         0.0880         0.0975 
+cyclicRandom01 
+        0.0420 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.7460         0.7455         0.7350         0.7350         0.7440 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0195         0.0330 
+cyclicRandom01 
+        0.0060 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.4770         0.4470         0.4265         0.4355         0.4420 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+[1] "#########4############"

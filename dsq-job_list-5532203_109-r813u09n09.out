@@ -1,0 +1,25 @@
+sample size 500 
+num of features in Z 2 
+design Cauchy 
+noise/error cauchy 
+signal/power 0 
+[1] "#########1############"
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.0230         0.0445         0.0445         0.0420         0.0485 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0495         0.0420         0.0395         0.0425         0.0390 
+cyclicRandom01 
+        0.0455 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.0165         0.0075         0.0080         0.0070         0.0070 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0075         0.0085 
+cyclicRandom01 
+        0.0060 
+         ttest             FL          PRegs      PRegsCoef           perm 
+        0.0120         0.0010         0.0010         0.0005         0.0010 
+cyclicStrong05   cyclicWeak05 cyclicRandom05 cyclicStrong01   cyclicWeak01 
+        0.0000         0.0000         0.0000         0.0000         0.0000 
+cyclicRandom01 
+        0.0000 
+[1] "#########2############"

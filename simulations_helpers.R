@@ -37,7 +37,19 @@ data_gen = function(n=100, p = 2, M = 2000, design = "AnovaBalance", noise = "ga
       xZ[j,j]=1
     }
     xZ[,p+1]=1
-  }else{
+  }else if(design == "Paired"){
+    xZ = diag(1, p+1)
+    #previously rbind(xZ, m)
+    m=1
+    for(l in 1:m){
+      xZ = rbind(xZ, rep(1, p+1))
+    }
+    if(nrow(xZ)<n){
+      xZ = rbind(xZ, matrix(0, ncol = p+1, nrow = n-nrow(xZ)))
+    }
+    xZ[,p+1]=1
+  }
+  else{
     stop("unknown design")
   }
   xZ = apply(xZ, 2, function(z) z/sqrt(sum(z*z)))

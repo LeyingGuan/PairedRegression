@@ -54,11 +54,8 @@ for(it in 1:iter){
 
   print(apply(results[["pvalues"]][[it]][["twosided"]]<=0.05,2,mean))
   print(apply(results[["pvalues"]][[it]][["twosided"]]<=0.01,2,mean))
-<<<<<<< HEAD
-  saveRDS(results, file = paste0(path,result_file_name))
-=======
   print(apply(results[["pvalues"]][[it]][["twosided"]]<=0.001,2,mean))
+  saveRDS(results, file = paste0(path,result_file_name))
   #saveRDS(results, file = paste0(path,result_file_name))
->>>>>>> e55732742df7fa41a5b995396d7cf72b7cf6cee1
 }
 

@@ -150,6 +150,7 @@ sim_comparisons_singleSetting = function(dat, B = 2000){
   X = cbind(dat$x, dat$Z)
   m = 20
   n = nrow(X)
+  if(n/ncol(dat$Z) >= 20){
   res1 <- find_eta_GA(X0, m, testinds = 1,
                       popSize = 10, rounds = rounds1,
                       M = M)
@@ -158,7 +159,9 @@ sim_comparisons_singleSetting = function(dat, B = 2000){
                       popSize = 10, rounds = rounds2,
                       M = M)
   orderings = cbind(cbind(sample(1:n), res1$ordering),res2$ordering)
-  
+  }else{
+  orderings = cbind(cbind(sample(1:n), sample(1:n)),sample(1:n))
+  }
   pval_CPT_mat = matrix(NA, ncol  = 3, nrow = 3)
   alphas = c(0.05, 0.01, 0.001)
   l=1

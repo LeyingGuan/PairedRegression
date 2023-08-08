@@ -60,7 +60,7 @@ List permutation_conformal_C(arma::mat Xresid, arma::vec yfitted, arma::vec yres
     }
     
     arma::uvec ii = find(abs(tval_b0) < abs(tval_b));
-    arma::uvec ii3 = find((tval_b0) == abs(tval_b));
+    arma::uvec ii3 = find(abs(tval_b0) == abs(tval_b));
     arma::uvec ii1 = find(tval_b0 < tval_b);
     arma::uvec ii2 = find(tval_b0 > tval_b);
     arma::uvec ii4 = find(tval_b0 == tval_b);

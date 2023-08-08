@@ -137,7 +137,7 @@ sim_comparisons_singleSetting = function(dat, B = 2000){
                       popSize = 10, rounds = rounds1,
                       M = M)
   res2 <- find_eta_GA(X0, m, ga_obj = res1$ga_obj,
-                      testinds = 1:ninds,
+                      testinds = 1,
                       popSize = 10, rounds = rounds2,
                       M = M)
   orderings = cbind(cbind(sample(1:n), res1$ordering),res2$ordering)

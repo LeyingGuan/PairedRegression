@@ -17,7 +17,7 @@ do
       do
         for n in "${n_values[@]}"
 	do
-          echo "module load miniconda/23.3.1;conda activate /home/lg689/project/project/conda_env/PREGSenv;Rscript experiments_sim.R --n 100 --p $p --D $design --E $noise --S $power" >> $FILE
+          echo "module load miniconda/23.3.1;conda activate /home/lg689/project/project/conda_env/PREGSenv;Rscript experiments_sim.R --n $n --p $p --D $design --E $noise --S $power" >> $FILE
         done
       done
     done

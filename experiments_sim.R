@@ -52,8 +52,8 @@ for(it in 1:iter){
   dat$y = y_gen(dat$x, dat$beta, dat$epsMat)
   results[["pvalues"]][[it]] = sim_comparisons_singleSetting(dat, B = 2000)
 
-  apply(results[["pvalues"]][[it]][["twosided"]]<=0.05,2,mean)
-  apply(results[["pvalues"]][[it]][["twosided"]]<=0.01,2,mean)
+  print(apply(results[["pvalues"]][[it]][["twosided"]]<=0.05,2,mean))
+  print(apply(results[["pvalues"]][[it]][["twosided"]]<=0.01,2,mean))
   saveRDS(results, file = paste0(path,result_file_name))
 }
 

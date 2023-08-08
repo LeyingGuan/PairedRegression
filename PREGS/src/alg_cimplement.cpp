@@ -52,7 +52,7 @@ List permutation_conformal_C(arma::mat Xresid, arma::vec yfitted, arma::vec yres
       tval_b0 = prodb0;
       
       for(int j = 0; j < p; j++){
-        if(std::abs(prodb(j)) > 0 && std::abs(prodb0(j)) > 0){
+        if(std::abs(prodb(j)) > 0 && std::abs(prodb0(j)) > 0 && (type != "coef")){
           tval_b(j) = prodb(j) / std::sqrt(aa1_vec(j));
           tval_b0(j) = prodb0(j)/ std::sqrt(aa0_vec(j));
         }
@@ -82,7 +82,7 @@ List permutation_conformal_C(arma::mat Xresid, arma::vec yfitted, arma::vec yres
     if(!ii4.is_empty()){
       pvals_pos(ii4) += 0.5;
       pvals_neg(ii4) += 0.5;
-      minusB1(ii1) -= 0.5;
+      minusB1(ii4) -= 0.5;
     }
   }
   

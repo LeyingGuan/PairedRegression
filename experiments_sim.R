@@ -19,7 +19,7 @@ parser$add_argument("--E", type = "character", help = "noise/error (gaussian, ca
 parser$add_argument("--S", type = "numeric", help = "signal/power [0,.99]")
 
 args <- parser$parse_args()
-#args$D = "AnovaBalance"; args$E = "gaussian"; args$S=.9; args$p=20
+#args$D = "Cauchy"; args$E = "multinomial"; args$S=0; args$p=20;args$n=100
 
 cat(messages[1], args$n, "\n")
 cat(messages[2], args$p, "\n")
@@ -28,7 +28,7 @@ cat(messages[4], args$E, "\n")
 cat(messages[5], args$S, "\n")
 
 
-iter = 20
+iter = 1
 set.seed(2024)
 seeds = sample(1:100000, iter, replace = F)
 results = list()
@@ -54,6 +54,11 @@ for(it in 1:iter){
 
   print(apply(results[["pvalues"]][[it]][["twosided"]]<=0.05,2,mean))
   print(apply(results[["pvalues"]][[it]][["twosided"]]<=0.01,2,mean))
+<<<<<<< HEAD
   saveRDS(results, file = paste0(path,result_file_name))
+=======
+  print(apply(results[["pvalues"]][[it]][["twosided"]]<=0.001,2,mean))
+  #saveRDS(results, file = paste0(path,result_file_name))
+>>>>>>> e55732742df7fa41a5b995396d7cf72b7cf6cee1
 }
 

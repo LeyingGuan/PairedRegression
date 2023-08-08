@@ -102,10 +102,14 @@ sim_comparisons_singleSetting = function(dat, B = 2000){
   pval_FL_twosided = rep(NA, ncol(dat$y))
   pval_FL_onesided = rep(NA, ncol(dat$y))
   for(l in 1:ncol(dat$y)){
-    tmp1partial <- FL(y=dat$y[,l], x=dat$x, z=dat$Z, add_intercept = T, B = B, statType = "partial")$res
+    y = dat$y[,l]
+    x = dat$x
+    z = dat$Z
+    tmp1partial <- FL(y=y, x=x, z=z, add_intercept = T, B = B, statType = "partial")$res
     pval_FL_twosided[l] = tmp1partial$unsigned
     pval_FL_onesided[l] = 2*min(tmp1partial$pos,tmp1partial$neg)
   }
+  
   ## PRegs t-test
   pval_PRegs_twosided_tstat = rep(NA, ncol(dat$y))
   pval_PRegs_onesided_tstat = rep(NA, ncol(dat$y))

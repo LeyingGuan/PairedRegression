@@ -1,6 +1,0 @@
-sample size 500 
-num of features in Z 20 
-design AnovaUnbalance 
-noise/error cauchy 
-signal/power 0.9 
-[1] "#########1############"

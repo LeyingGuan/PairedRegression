@@ -8,11 +8,11 @@ perm_prepare = function(y, x, z, add_intercept){
     Z1 = z
   }
   Zsvd = svd(Z1)
-  U = Zsvd$u # Hz = U U^T
+  d = Zsvd$d
+  U = Zsvd$u[,  d>=1E-10] # Hz = U U^T
   yfitted = U%*%(t(U)%*%y)
   yresid = y - yfitted
   Xresid = x- U%*%(t(U)%*%x)
-  
   return(list(U = U, yfitted = yfitted, yresid = yresid, Xresid = Xresid))
 }
 

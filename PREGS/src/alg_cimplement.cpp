@@ -15,7 +15,8 @@ List permutation_conformal_C(arma::mat Xresid, arma::vec yfitted, arma::vec yres
   arma::vec pvals(p, arma::fill::zeros);
   arma::vec pvals_pos(p, arma::fill::zeros);
   arma::vec pvals_neg(p, arma::fill::zeros);
-  
+  arma::vec minusB(p, arma::fill::zeros);
+  arma::vec minusB1(p, arma::fill::zeros);
   for(int b = 0; b < B; b++){
     arma::uvec current_perm_idx = perm_idx.col(b);
     arma::mat Uperm = U.rows(current_perm_idx);
@@ -58,13 +59,18 @@ List permutation_conformal_C(arma::mat Xresid, arma::vec yfitted, arma::vec yres
       } 
     }
     
-    arma::uvec ii = find(abs(tval_b0) <= abs(tval_b));
+    arma::uvec ii = find(abs(tval_b0) < abs(tval_b));
+    arma::uvec ii3 = find((tval_b0) == abs(tval_b));
+    arma::uvec ii1 = find(tval_b0 < tval_b);
+    arma::uvec ii2 = find(tval_b0 > tval_b);
+    arma::uvec ii4 = find(tval_b0 == tval_b);
     if(!ii.is_empty()){
       pvals(ii) += 1;
     }
-    
-    arma::uvec ii1 = find(tval_b0 <= tval_b);
-    arma::uvec ii2 = find(tval_b0 >= tval_b);
+    if(!ii3.is_empty()){
+      pvals(ii3) += 0.5;
+      minusB(ii1) -= 0.5;
+    }
     
     if(!ii1.is_empty()){
       pvals_pos(ii1) += 1;
@@ -73,11 +79,16 @@ List permutation_conformal_C(arma::mat Xresid, arma::vec yfitted, arma::vec yres
     if(!ii2.is_empty()){
       pvals_neg(ii2) += 1;
     }
+    if(!ii4.is_empty()){
+      pvals_pos(ii4) += 0.5;
+      pvals_neg(ii4) += 0.5;
+      minusB1(ii1) -= 0.5;
+    }
   }
   
-  pvals = (pvals + 1) / (B + 1);
-  pvals_neg = (pvals_neg + 1) / (B + 1);
-  pvals_pos = (pvals_pos + 1) / (B + 1);
+  pvals = (pvals + 1) / (B +  minusB + 1);
+  pvals_neg = (pvals_neg + 1) / (B + minusB1 + 1);
+  pvals_pos = (pvals_pos + 1) / (B + minusB1 + 1);
   
   return List::create(Named("unsigned") = pvals,
                       Named("pos") = pvals_pos,
@@ -203,17 +214,12 @@ List permutation_simple_C(arma::mat X, arma::vec yresid, arma::mat U, arma::umat
     
     arma::uvec ii1 = find(tval < tval_b);
     arma::uvec ii2 = find(tval > tval_b);
-    arma::uvec ii3 = find(tval == tval_b);
     if(!ii1.is_empty()){
       pvals_pos(ii1) += 1;
     }
     
     if(!ii2.is_empty()){
       pvals_neg(ii2) += 1;
-    }
-
-    if(!ii3.is_empty()){
-
     }
   }
   

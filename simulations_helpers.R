@@ -1,7 +1,7 @@
 library(PREGS)
 library(MASS)
 
-data_gen = function(n=100, p = 2, M = 2000, design = "AnovaBalance", noise = "gaussian",seed = 1){
+data_gen = function(n=100, p = 2, M = 2000, design = "AnovaBalance", noise = "gaussian",seed = 1, m =5){
   xZ = matrix(NA, ncol = p+1, nrow = n)
   if(design == "AnovaBalance"){
     #xZ = t(rmultinom(n = n, size = 1, prob = rep(1.0/(p+1), p+1)))
@@ -40,7 +40,6 @@ data_gen = function(n=100, p = 2, M = 2000, design = "AnovaBalance", noise = "ga
   }else if(design == "Paired"){
     xZ = diag(1, p+1)
     #previously rbind(xZ, m)
-    m=1
     for(l in 1:m){
       xZ = rbind(xZ, rep(1, p+1))
     }

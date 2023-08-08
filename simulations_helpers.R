@@ -8,7 +8,7 @@ data_gen = function(n=100, p = 2, M = 2000, design = "AnovaBalance", noise = "ga
     m = floor(n/(p+1))
     xZ = diag(1, p+1)
     for(l in 1:m){
-      xZ = rbind(xZ, m)
+      xZ = rbind(xZ, diag(1, p+1))
     }
     if(nrow(xZ)<n){
       xZ = rbind(xZ, matrix(0, ncol = p+1, nrow = n-nrow(xZ)))

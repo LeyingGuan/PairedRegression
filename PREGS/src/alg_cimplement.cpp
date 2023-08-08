@@ -69,7 +69,7 @@ List permutation_conformal_C(arma::mat Xresid, arma::vec yfitted, arma::vec yres
     }
     if(!ii3.is_empty()){
       pvals(ii3) += 0.5;
-      minusB(ii1) -= 0.5;
+      minusB(ii3) -= 0.5;
     }
     
     if(!ii1.is_empty()){

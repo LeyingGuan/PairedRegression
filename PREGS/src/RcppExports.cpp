@@ -12,18 +12,17 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // permutation_conformal_C
-List permutation_conformal_C(arma::mat Xresid, arma::vec yfitted, arma::vec yresid, arma::mat U, arma::umat perm_idx, std::string type);
-RcppExport SEXP _PREGS_permutation_conformal_C(SEXP XresidSEXP, SEXP yfittedSEXP, SEXP yresidSEXP, SEXP USEXP, SEXP perm_idxSEXP, SEXP typeSEXP) {
+List permutation_conformal_C(arma::mat Xresid, arma::vec y, arma::mat U, arma::umat perm_idx, std::string type);
+RcppExport SEXP _PREGS_permutation_conformal_C(SEXP XresidSEXP, SEXP ySEXP, SEXP USEXP, SEXP perm_idxSEXP, SEXP typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type Xresid(XresidSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type yfitted(yfittedSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type yresid(yresidSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type y(ySEXP);
     Rcpp::traits::input_parameter< arma::mat >::type U(USEXP);
     Rcpp::traits::input_parameter< arma::umat >::type perm_idx(perm_idxSEXP);
     Rcpp::traits::input_parameter< std::string >::type type(typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(permutation_conformal_C(Xresid, yfitted, yresid, U, perm_idx, type));
+    rcpp_result_gen = Rcpp::wrap(permutation_conformal_C(Xresid, y, U, perm_idx, type));
     return rcpp_result_gen;
 END_RCPP
 }

@@ -4,6 +4,27 @@
 
 using namespace Rcpp;
 
+arma::mat dcSVD(arma::mat & X) {
+  arma::mat U, V;
+  arma::vec S;
+  arma::svd(U, S, V, X, "dc");
+  
+  int K = 0;
+  for(int k; k < S.n_elem; k++){
+    if(S(i) > 1E-10){
+      K +=1;
+    }
+  }
+  arma::mat U0(U.n_rows, K, arma::fill::zeros);
+  for(int k; k < K; k++){
+    for(int i; i < U.n_rows; i++){
+      U0(i,k) += U(i,k);
+    }
+    
+  }
+  return U0;
+}
+
 // [[Rcpp::export]]
 List permutation_conformal_C(arma::mat Xresid, arma::vec y,  arma::mat U, arma::umat perm_idx, std::string type = "coef") {
   
@@ -114,10 +135,12 @@ List permutation_conformal_Cjoint(arma::mat Xresid, arma::vec y,  arma::mat U, a
     arma::uvec current_perm_idx = perm_idx.col(b);
     arma::mat Uperm = U.rows(current_perm_idx);
     //orthogonalize Uperm with repect to U
-    arma::mat 
-    
-    arma::vec yresid_perm = y - Uperm * (Uperm.t() * y);
+    arma::mat Uperm =Uperm - U%*%(U.t()%*%Uperm);
+    //orthogonalize Uperm
+    Uperm = dcSVD(X);
+    arma::vec yresid_perm = yresid - Uperm * (Uperm.t() * yresid);
     arma::mat X2 = Xresid.rows(current_perm_idx);
+    arma::mat Xresid2 = Xresid - Uperm * (Uperm.t() * Xresid);
     arma::vec prodb0 = Xresid.t() * yresid_perm;
     arma::vec prodb = X2.t() * yresid;
     

@@ -163,7 +163,6 @@ sim_comparisons_singleSetting = function(dat, B = 2000){
   alphas = c(0.05, 0.01, 0.001)
   for(k in 1:length(alphas)){
     for(j in 1:ncol(orderings)){
-      if(!is.na(pval_CPT_mat[k,j])){
         for(l in 1:ncol(dat$y)){
           out0 = CPT(dat$y[,l], X, ordering = orderings[,j],testinds = 1,
                      alpha = alphas[k],
@@ -173,7 +172,6 @@ sim_comparisons_singleSetting = function(dat, B = 2000){
             pvals_CPT_array[k,j] = NA
           }
         }
-      }
     }
   }
   }

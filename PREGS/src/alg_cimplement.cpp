@@ -113,6 +113,8 @@ List permutation_conformal_Cjoint(arma::mat Xresid, arma::vec y,  arma::mat U, a
   for(int b = 0; b < B; b++){
     arma::uvec current_perm_idx = perm_idx.col(b);
     arma::mat Uperm = U.rows(current_perm_idx);
+    //orthogonalize Uperm with repect to U
+    arma::mat 
     
     arma::vec yresid_perm = y - Uperm * (Uperm.t() * y);
     arma::mat X2 = Xresid.rows(current_perm_idx);

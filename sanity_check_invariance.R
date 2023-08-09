@@ -49,8 +49,9 @@ for(l in 1:ncol(dat$y)){
   pval_PRegs_twosided_coef2[l] =  (sum(abs(bb[,2])>=abs(bb[,1]))+1)/(B+1)
   pval_PRegs_onesided_coef2[l] = 2*min((sum(bb[,2]>= bb[,1])+1)/(B+1),(sum(bb[,2] <= bb[,1])+1)/(B+1))
 }
-
-
+alpha = 0.2
+mean(pval_PRegs_twosided_coef2<=alpha, na.rm = T)
+mean(pval_PRegs_onesided_coef2<=alpha, na.rm = T)
 
 
 

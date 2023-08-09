@@ -58,9 +58,9 @@ PREG = function(y, x, z, add_intercept = T, B = 1E4, statType = "coef"){
   perm_idx = sapply(1:B, function(b) sample(1:n, n, replace = F))
   perm_idxC = perm_idx-1
   if(statType == "coef"){
-    out = permutation_conformal_C(Xresid=Xresid, yfitted=yfitted,yresid=yresid, U=U, perm_idx=perm_idxC, type = "coef")
+    out = permutation_conformal_C(Xresid=Xresid, y=y, U=U, perm_idx=perm_idxC, type = "coef")
   }else{
-    out = permutation_conformal_C(Xresid=Xresid, yfitted=yfitted,yresid=yresid, U=U, perm_idx=perm_idxC, type = "partial")
+    out = permutation_conformal_C(Xresid=Xresid, y=y, U=U, perm_idx=perm_idxC, type = "partial")
   }
   return(list(res=out))
   

@@ -1,9 +1,10 @@
 library(PREGS)
+source("simulations_helpers.R")
 set.seed(2024)
 B = 2000
 M = 2000
 args = list()
-args$D = "Paired"; args$E = "multinomial"; args$S=0; args$p=20;args$n=100
+args$D = "Gaussian"; args$E = "gaussian"; args$S=0; args$p=20;args$n=100
 
 dat = data_gen(n=as.integer(args$n), p = as.integer(args$p), M = M, design =args$D, noise = args$E,seed = seeds[it])
 if(as.numeric(args$S) <=0.0){
@@ -23,6 +24,9 @@ for(l in 1:ncol(dat$y)){
   pval_PRegs_twosided_coef[l] =  tmp1coef$unsigned
   pval_PRegs_onesided_coef[l] = 2*min(tmp1coef$pos,tmp1coef$neg)
 }
+alpha = 0.05
+mean(pval_PRegs_twosided_coef<=alpha)
+mean(pval_PRegs_onesided_coef<=alpha)
 par(mfrow  = c(2,1))
 hist(pval_PRegs_twosided_coef, breaks = 100)
 hist(pval_PRegs_onesided_coef, breaks = 100)

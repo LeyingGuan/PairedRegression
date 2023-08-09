@@ -29,7 +29,6 @@ List permutation_conformal_C(arma::mat Xresid, arma::vec y,  arma::mat U, arma::
     
     arma::vec yresid_ = yresid - Uperm * (Uperm.t() * yresid);
     arma::vec yresid_perm_ = yresid_perm - U * (U.t() * yresid_perm);
-    
     arma::vec tval_b(p, arma::fill::zeros), tval_b0(p, arma::fill::zeros);
     if(type == "coef"){
       tval_b += prodb;
@@ -61,7 +60,6 @@ List permutation_conformal_C(arma::mat Xresid, arma::vec y,  arma::mat U, arma::
         }
       } 
     }
-    
     arma::uvec ii = find(abs(tval_b0) < abs(tval_b));
     arma::uvec ii3 = find(abs(tval_b0) == abs(tval_b));
     arma::uvec ii1 = find(tval_b0 < tval_b);
@@ -88,7 +86,6 @@ List permutation_conformal_C(arma::mat Xresid, arma::vec y,  arma::mat U, arma::
       minusB1(ii4) -= 0.5;
     }
   }
-  
   pvals = (pvals + 1) / (B +  minusB + 1);
   pvals_neg = (pvals_neg + 1) / (B + minusB1 + 1);
   pvals_pos = (pvals_pos + 1) / (B + minusB1 + 1);

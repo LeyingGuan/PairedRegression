@@ -36,11 +36,9 @@ seeds = sample(1:100000, iter, replace = F)
 results = list()
 results[["pvalues"]] = list()
 results[["setting"]] =args
-if(args$S<=0.0){
-  result_file_name = paste(args$D, args$E, args$n, args$p, "null", sep="_")
-}else{
-  result_file_name = paste(args$D, args$E, args$n, args$p, "alternative",sep="_")
-}
+
+result_file_name = paste(args$D, args$E, args$n, args$p, "power", args$S*100,sep="_")
+
 if(args$CPT){
   result_file_name=paste0(result_file_name, "_", "wiCPT",".Rdata")
 }else{
@@ -54,7 +52,7 @@ for(it in 1:iter){
   if(as.numeric(args$S) <=0.0){
     dat$beta = 0.0
   }else{
-    dat$beta  = beta_gen(dat$x, dat$Z, dat$epsMat, power = as.numeric(args$S))
+    dat$beta  = beta_gen(dat, power = as.numeric(args$S))
   }
   dat$y = y_gen(dat$x, dat$beta, dat$epsMat)
   results[["pvalues"]][[it]] = sim_comparisons_singleSetting(dat, B = B, run_CPT=args$CPT)

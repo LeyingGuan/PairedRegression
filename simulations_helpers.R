@@ -75,7 +75,10 @@ data_gen = function(n=100, p = 2, M = 2000, design = "AnovaBalance", noise = "ga
   return(list(x = x, Z = Z, epsMat = epsMat))
 }
 
-beta_gen = function(x, Z,epsMat, beta_grids =2^(c(1:300)/20),power = .9){
+beta_gen = function(dat, beta_grids =2^(c(1:400)/30),power = .9){
+  x = dat$x
+  Z = dat$Z
+  epsMat = dat$epsMat
   n = nrow(Z)
   fitted =lm(epsMat ~ x+Z) 
   rx = lm(x~Z)$residuals
@@ -83,19 +86,25 @@ beta_gen = function(x, Z,epsMat, beta_grids =2^(c(1:300)/20),power = .9){
   reps = lm(epsMat~Z)$residuals
   sigma_mat_resid = rx%o%beta_grids
   residuals_denominator =apply(reps_^2, 2, sum)/(n-1-ncol(Z))
+  #resid1 = reps[,1] +sigma_mat_resid[,which(beta_grids==beta)]
+  ##y2=epsMat[,1]+x*beta
+  #resid2 =  lm(y2~Z)$residuals
+  #all.equal(resid1, resid2)
   residuals_numerator = sapply(1:length(beta_grids), function(i){
-    apply((reps_ +sigma_mat_resid[,i])^2-reps_^2,2,sum)
+    apply((reps +sigma_mat_resid[,i])^2-reps_^2,2,sum)
   })
   Fstats = residuals_numerator/residuals_denominator
   pvals = pf(Fstats, df1 = 1, df2 = (n-1-ncol(Z)),lower.tail = F)
   powers = apply(pvals<=0.05,2,mean)
   id = which.min(abs(powers-power))
+  # names(powers) = as.character(beta_grids)
+  # print(powers)
   beta = beta_grids[id]
   return(beta)
 }
 
 y_gen = function(x, beta, epsMat){
-  y = apply(epsMat, 2, function(z) z+x[,1]*beta)
+  y = apply(epsMat, 2, function(z) z+x*beta)
   return(y)
 }
 
@@ -134,9 +143,7 @@ sim_comparisons_singleSetting = function(dat, run_CPT=TRUE, B = 2000){
     res1 <- find_eta_GA(X0, m, testinds = 1, popSize = 10, rounds = rounds,M = M)
     ordering = res1$ordering
     for(l in 1:ncol(dat$y)){
-      out0 = CPT(dat$y[,l], X, ordering = ordering,testinds = 1,
-                 alpha = 0.05,
-                 returnCI = FALSE)
+      out0 = CPT(dat$y[,l], X, ordering = ordering,testinds = 1,alpha = 0.05,returnCI = FALSE)
       pvals_collection[l,6]=  out0$pval[1]
     }
   }

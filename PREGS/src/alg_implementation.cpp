@@ -32,7 +32,7 @@ List permutation_PREGSseparate(const arma::vec& x, const arma::mat& Y, arma::mat
   arma::vec xresid = x - U*(U.t()*x);
   int N = Y.n_rows;
   int M = Y.n_cols;
-  arma::mat yresid_for_perm = Y - U * (U.t() * Y);
+  arma::mat yresid_for_perm0 = Y - U * (U.t() * Y);
   arma::uvec seq0 =arma::conv_to<arma::uvec>::from(arma::linspace<arma::vec>(0, N - 1, N));
   arma::uvec seq = arma::shuffle(seq0);
   arma::vec pvals(M, arma::fill::zeros);
@@ -45,9 +45,9 @@ List permutation_PREGSseparate(const arma::vec& x, const arma::mat& Y, arma::mat
     arma::vec xresid_perm = xresid(seq) * 1.0;
     arma::mat yresid_for_original = Y - Uperm * (Uperm.t() * Y);
     arma::vec prodb0 = yresid_for_original.t() * xresid;
-    arma::vec prodb =  yresid_for_perm.t() * xresid_perm;
+    arma::vec prodb =  yresid_for_perm0.t() * xresid_perm;
     yresid_for_original =yresid_for_original - U * (U.t() * yresid_for_original);
-    yresid_for_perm = yresid_for_perm - Uperm * (Uperm.t() * yresid_for_perm);
+    arma::vec yresid_for_perm = yresid_for_perm0 - Uperm * (Uperm.t() * yresid_for_perm0);
     //calculate F-stat
     arma::mat yresid_for_original_x(N, M, arma::fill::zeros);
     arma::mat yresid_for_perm_x(N, M, arma::fill::zeros);

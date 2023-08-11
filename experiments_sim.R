@@ -18,7 +18,7 @@ parser$add_argument("--p", type = "integer", help = "num of features in Z")
 parser$add_argument("--D", type = "character", help = "design (AnovaBalance, Gaussian, Cauchy, CorGaussian,  AnovaUnbalance)")
 parser$add_argument("--E", type = "character", help = "noise/error (gaussian, cauchy, exponential,  multinomial)")
 parser$add_argument("--S", type = "numeric", help = "signal/power [0,.99]")
-parser$add_argument("--CPT", type = "bool", help = "If run CPT")
+parser$add_argument("--CPT", type = "logical", help = "If run CPT")
 args <- parser$parse_args()
 #args$D = "Cauchy"; args$E = "multinomial"; args$S=0; args$p=20;args$n=100
 

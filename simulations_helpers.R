@@ -105,109 +105,45 @@ y_gen = function(x, beta, epsMat){
 # dat$y = y_gen(dat$x, dat$beta, dat$epsMat)
 
 #source("/Users/lg689/Downloads/CPT-master/code/expr_functions.R")
-sim_comparisons_singleSetting = function(dat, B = 2000){
+sim_comparisons_singleSetting = function(dat, run_CPT=TRUE, B = 2000){
+  
+  pvals_collection = data.frame(matrix(NA, ncol = 5+1, nrow = ncol(dat$y)))
+  colnames(pvals_collection) = c("Ftest", "PERMtest", 
+                                 "FLtest", "PREGStest","PREGStestII",
+                                 "CPT")
   ###t test
   fitted_ttest = summary(lm(dat$y~dat$x+dat$Z))
-  pval_ttest = as.vector(sapply(fitted_ttest, function(z) z$coefficients[2,4]))
+  pvals_collection[,1] = as.vector(sapply(fitted_ttest, function(z) z$coefficients[2,4]))
   
-  ###FL-t test
-  pval_FL_twosided = rep(NA, ncol(dat$y))
-  pval_FL_onesided = rep(NA, ncol(dat$y))
-  for(l in 1:ncol(dat$y)){
-    y = dat$y[,l]
-    x = dat$x
-    z = dat$Z
-    tmp1partial <- FL(y=y, x=x, z=z, add_intercept = T, B = B, statType = "partial")$res
-    pval_FL_twosided[l] = tmp1partial$unsigned
-    pval_FL_onesided[l] = 2*min(tmp1partial$pos,tmp1partial$neg)
-  }
+  ##simple permutations
+  pvals_collection[,2] = PERMtest(x= dat$x, y = dat$y, z=dat$Z, B = B)$res$unsigned
+  ###FL-test (F)
+  pvals_collection[,3] =  FLtest(x= dat$x, y = dat$y, z=dat$Z, B = B)$res$unsigned
   
-  ## PRegs t-test
-  pval_PRegs_twosided_tstat = rep(NA, ncol(dat$y))
-  pval_PRegs_onesided_tstat = rep(NA, ncol(dat$y))
-  for(l in 1:ncol(dat$y)){
-    tmp1partial <- PREG(y=dat$y[,l], x=dat$x, z=dat$Z, add_intercept = T, B = B, statType = "partial")$res
-    pval_PRegs_twosided_tstat[l] = tmp1partial$unsigned
-    pval_PRegs_onesided_tstat[l] = 2*min(tmp1partial$pos,tmp1partial$neg)
-  }
-  
-  ## PRegs coef
-  pval_PRegs_twosided_coef = rep(NA, ncol(dat$y))
-  pval_PRegs_onesided_coef = rep(NA, ncol(dat$y))
-  for(l in 1:ncol(dat$y)){
-    tmp1coef <- PREG(y=dat$y[,l], x=dat$x, z=dat$Z, add_intercept = T, B = B, statType = "coef")$res
-    pval_PRegs_twosided_coef[l] =  tmp1coef$unsigned
-    pval_PRegs_onesided_coef[l] = 2*min(tmp1coef$pos,tmp1coef$neg)
-  }
-  
+  ## PRegs
+  pvals_collection[,4] = PREGtest(x= dat$x, y = dat$y, z=dat$Z, B = B, mode = "separate")$res$unsigned
+  pvals_collection[,5] = PREGtest(x= dat$x, y = dat$y, z=dat$Z, B = B, mode = "joint")$res$unsigned
+
+
   ##cyclic permutations
   ### genetic alg ordering
-  rounds1 <- 100
-  rounds2 <- 900
-  M = NULL
-  X0 = cbind(dat$x, dat$Z[,-ncol(dat$Z)])
-  X = cbind(dat$x, dat$Z)
-  m = 20
-  n = nrow(X)
-  pvals_CPT_array = array(NA, dim = c(ncol(dat$y), 3, 3))
-  if(n/ncol(dat$Z) >= 20){
-  res1 <- find_eta_GA(X0, m, testinds = 1,
-                      popSize = 10, rounds = rounds1,
-                      M = M)
-  res2 <- find_eta_GA(X0, m, ga_obj = res1$ga_obj,
-                      testinds = 1,
-                      popSize = 10, rounds = rounds2,
-                      M = M)
-  orderings = cbind(cbind(sample(1:n), res1$ordering),res2$ordering)
-  pval_CPT_mat = matrix(NA, ncol  = 3, nrow = 3)
-  alphas = c(0.05, 0.01, 0.001)
-  for(k in 1:length(alphas)){
-    for(j in 1:ncol(orderings)){
-        for(l in 1:ncol(dat$y)){
-          out0 = CPT(dat$y[,l], X, ordering = orderings[,j],testinds = 1,
-                     alpha = alphas[k],
-                     returnCI = FALSE)
-          pvals_CPT_array[l,k,j] =  out0$pval[1]
-          if(out0$O==0){
-            pvals_CPT_array[k,j] = NA
-          }
-        }
+  if( run_CPT){
+    rounds <- 100 + 900; m = 19;M = NULL
+    X0 = cbind(dat$x, dat$Z[,-ncol(dat$Z)])
+    X = cbind(dat$x, dat$Z)
+    res1 <- find_eta_GA(X0, m, testinds = 1, popSize = 10, rounds = rounds,M = M)
+    ordering = res1$ordering
+    for(l in 1:ncol(dat$y)){
+      out0 = CPT(dat$y[,l], X, ordering = ordering,testinds = 1,
+                 alpha = 0.05,
+                 returnCI = FALSE)
+      pvals_collection[l,6]=  out0$pval[1]
     }
   }
-  }
-  ##simple permutations
-  pval_perm_twosided = rep(NA, ncol(dat$y))
-  pval_perm_onesided = rep(NA, ncol(dat$y))
-  for(l in 1:ncol(dat$y)){
-    tmp1partial <- naivePermutation(y=dat$y[,l], x=dat$x, z=dat$Z, add_intercept = T, B = B)$res
-    pval_perm_twosided[l] =  tmp1partial$unsigned
-    pval_perm_onesided[l] = 2*min(tmp1partial$pos,tmp1partial$neg)
-  }
-  pvals_list = list()
-  
-  pvals_list[["twosided"]] = list()
-  pvals_list[["twosided"]] = data.frame("ttest" = pval_ttest, "FL" = pval_FL_twosided,
-                                        "PRegs" = pval_PRegs_twosided_tstat,
-                                        "PRegsCoef" = pval_PRegs_twosided_coef,
-                                        "perm" = pval_perm_twosided,
-                                        "cyclicStrong05" = pvals_CPT_array[,1,3],
-                                        "cyclicWeak05" = pvals_CPT_array[,1,2],
-                                        "cyclicRandom05" = pvals_CPT_array[,1,1],
-                                        "cyclicStrong01" = pvals_CPT_array[,2,3],
-                                        "cyclicWeak01" = pvals_CPT_array[,2,2],
-                                        "cyclicRandom01" = pvals_CPT_array[,2,1]
-  )
-  pvals_list[["onesided"]] = data.frame("ttest" = pval_ttest, "FL" = pval_FL_onesided,
-                                        "PRegs" = pval_PRegs_onesided_tstat,
-                                        "PRegsCoef" = pval_PRegs_onesided_coef,
-                                        "perm" = pval_perm_onesided )
-  apply( pvals_list[["twosided"]]<=0.05,2,mean)
-  apply( pvals_list[["twosided"]]<=0.01,2,mean)
-  apply( pvals_list[["twosided"]]<=0.001,2,mean)
-  
-  apply( pvals_list[["onesided"]]<=0.05,2,mean)
-  apply( pvals_list[["onesided"]]<=0.01,2,mean)
-  apply( pvals_list[["onesided"]]<=0.001,2,mean)
-  return(pvals_list)
+  # apply(pvals_collection<=0.05,2,mean)
+  # apply(pvals_collection<=0.01,2,mean)
+  # apply(pvals_collection<=0.001,2,mean)
+
+  return(pvals_collection)
   
 }

@@ -11,48 +11,59 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// permutation_conformal_C
-List permutation_conformal_C(arma::mat Xresid, arma::vec y, arma::mat U, arma::umat perm_idx, std::string type);
-RcppExport SEXP _PREGS_permutation_conformal_C(SEXP XresidSEXP, SEXP ySEXP, SEXP USEXP, SEXP perm_idxSEXP, SEXP typeSEXP) {
+// permutation_PREGSseparate
+List permutation_PREGSseparate(const arma::vec& x, const arma::mat& Y, arma::mat& Z, const int B);
+RcppExport SEXP _PREGS_permutation_PREGSseparate(SEXP xSEXP, SEXP YSEXP, SEXP ZSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Xresid(XresidSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type y(ySEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type U(USEXP);
-    Rcpp::traits::input_parameter< arma::umat >::type perm_idx(perm_idxSEXP);
-    Rcpp::traits::input_parameter< std::string >::type type(typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(permutation_conformal_C(Xresid, y, U, perm_idx, type));
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< const int >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(permutation_PREGSseparate(x, Y, Z, B));
     return rcpp_result_gen;
 END_RCPP
 }
-// permutation_FL_C
-List permutation_FL_C(arma::mat Xresid, arma::vec yfitted, arma::vec yresid, arma::mat U, arma::umat perm_idx, std::string type);
-RcppExport SEXP _PREGS_permutation_FL_C(SEXP XresidSEXP, SEXP yfittedSEXP, SEXP yresidSEXP, SEXP USEXP, SEXP perm_idxSEXP, SEXP typeSEXP) {
+// permutation_PREGSjoint
+List permutation_PREGSjoint(const arma::vec& x, const arma::mat& Y, const arma::mat& Z, const int B);
+RcppExport SEXP _PREGS_permutation_PREGSjoint(SEXP xSEXP, SEXP YSEXP, SEXP ZSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Xresid(XresidSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type yfitted(yfittedSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type yresid(yresidSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type U(USEXP);
-    Rcpp::traits::input_parameter< arma::umat >::type perm_idx(perm_idxSEXP);
-    Rcpp::traits::input_parameter< std::string >::type type(typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(permutation_FL_C(Xresid, yfitted, yresid, U, perm_idx, type));
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< const int >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(permutation_PREGSjoint(x, Y, Z, B));
     return rcpp_result_gen;
 END_RCPP
 }
-// permutation_simple_C
-List permutation_simple_C(arma::mat X, arma::vec yresid, arma::mat U, arma::umat perm_idx);
-RcppExport SEXP _PREGS_permutation_simple_C(SEXP XSEXP, SEXP yresidSEXP, SEXP USEXP, SEXP perm_idxSEXP) {
+// permutation_FL
+List permutation_FL(const arma::vec& x, const arma::mat& Y, arma::mat& Z, const int B);
+RcppExport SEXP _PREGS_permutation_FL(SEXP xSEXP, SEXP YSEXP, SEXP ZSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type yresid(yresidSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type U(USEXP);
-    Rcpp::traits::input_parameter< arma::umat >::type perm_idx(perm_idxSEXP);
-    rcpp_result_gen = Rcpp::wrap(permutation_simple_C(X, yresid, U, perm_idx));
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< const int >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(permutation_FL(x, Y, Z, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// permutation_vanilla
+List permutation_vanilla(const arma::vec& x, const arma::mat& Y, arma::mat& Z, const int B);
+RcppExport SEXP _PREGS_permutation_vanilla(SEXP xSEXP, SEXP YSEXP, SEXP ZSEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< const int >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(permutation_vanilla(x, Y, Z, B));
     return rcpp_result_gen;
 END_RCPP
 }

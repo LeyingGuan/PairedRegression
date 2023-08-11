@@ -8,14 +8,16 @@
  */
 
 /* .Call calls */
-extern SEXP _PREGS_permutation_conformal_C(SEXP, SEXP, SEXP, SEXP, SEXP);
-extern SEXP _PREGS_permutation_FL_C(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-extern SEXP _PREGS_permutation_simple_C(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _PREGS_permutation_FL(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _PREGS_permutation_PREGSjoint(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _PREGS_permutation_PREGSseparate(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _PREGS_permutation_vanilla(SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-  {"_PREGS_permutation_conformal_C", (DL_FUNC) &_PREGS_permutation_conformal_C, 5},
-  {"_PREGS_permutation_FL_C",        (DL_FUNC) &_PREGS_permutation_FL_C,        6},
-  {"_PREGS_permutation_simple_C",    (DL_FUNC) &_PREGS_permutation_simple_C,    4},
+  {"_PREGS_permutation_FL",            (DL_FUNC) &_PREGS_permutation_FL,            4},
+  {"_PREGS_permutation_PREGSjoint",    (DL_FUNC) &_PREGS_permutation_PREGSjoint,    4},
+  {"_PREGS_permutation_PREGSseparate", (DL_FUNC) &_PREGS_permutation_PREGSseparate, 4},
+  {"_PREGS_permutation_vanilla",       (DL_FUNC) &_PREGS_permutation_vanilla,       4},
   {NULL, NULL, 0}
 };
 

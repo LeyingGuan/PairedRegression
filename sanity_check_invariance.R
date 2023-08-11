@@ -4,7 +4,7 @@ set.seed(2024)
 B = 2000
 M = 2000
 args = list()
-args$D = "Gaussian"; args$E = "gaussian"; args$S=0; args$p=20;args$n=100
+args$D = "Gaussian"; args$E = "gaussian"; args$S=0.5; args$p=15;args$n=100
 
 dat = data_gen(n=as.integer(args$n), p = as.integer(args$p), M = M, design =args$D, noise = args$E,seed = seeds[it])
 if(as.numeric(args$S) <=0.0){
@@ -18,15 +18,21 @@ dat$y = y_gen(dat$x, dat$beta, dat$epsMat)
 ##Paired regression sequential
 pval_PRegs_twosided_coef = rep(NA, ncol(dat$y))
 pval_PRegs_onesided_coef = rep(NA, ncol(dat$y))
+
+pval_FL = rep(NA, ncol(dat$y))
 for(l in 1:ncol(dat$y)){
   print(l)
-  tmp1coef <- PREG(y=dat$y[,l], x=dat$x, z=dat$Z, add_intercept = T, B = B, statType = "coef")$res
+  tmp1coef <- PREG(y=dat$y[,l], x=dat$x, z=dat$Z, add_intercept = T, B = B, statType = "partial")$res
   pval_PRegs_twosided_coef[l] =  tmp1coef$unsigned
   pval_PRegs_onesided_coef[l] = 2*min(tmp1coef$pos,tmp1coef$neg)
+  
+  tmp1coef <- FL(y=dat$y[,l], x=dat$x, z=dat$Z, add_intercept = T, B = B, statType = "partial")$res
+  pval_FL[l] =  tmp1coef$unsigned
 }
 alpha = 0.05
 mean(pval_PRegs_twosided_coef<=alpha)
 mean(pval_PRegs_onesided_coef<=alpha)
+mean(pval_FL<=alpha)
 par(mfrow  = c(2,1))
 hist(pval_PRegs_twosided_coef, breaks = 100)
 hist(pval_PRegs_onesided_coef, breaks = 100)
@@ -34,26 +40,41 @@ hist(pval_PRegs_onesided_coef, breaks = 100)
 pval_PRegs_twosided_coef2 = rep(NA, ncol(dat$y))
 pval_PRegs_onesided_coef2 = rep(NA, ncol(dat$y))
 
+# for(l in 1:ncol(dat$y)){
+#   print(l)
+#   ww = cbind(dat$y[,l], dat$x)
+#   perm_idx_X =  sapply(1:B, function(i) sample(1:args$n, args$n, replace = F))
+#   bb = matrix(NA, ncol = 2, nrow = B)
+#   for(b in 1:B){
+#     wwb  = cbind(ww, dat$x[perm_idx_X[,b]])
+#     tmp1 =lm(wwb~dat$Z+dat$Z[perm_idx_X[,b],,drop = D])
+#     wwb = tmp1$residuals
+#     bb[b,1] = sum(wwb[,1]*wwb[,2])/sum(wwb[,2]^2)
+#     bb[b,2] = sum(wwb[,1]*wwb[,3])/sum(wwb[,3]^2)
+#   }
+#   pval_PRegs_twosided_coef2[l] =  (sum(abs(bb[,2])>=abs(bb[,1]))+1)/(B+1)
+#   pval_PRegs_onesided_coef2[l] = 2*min((sum(bb[,2]>= bb[,1])+1)/(B+1),(sum(bb[,2] <= bb[,1])+1)/(B+1))
+# }
+# alpha = 0.2
+# mean(pval_PRegs_twosided_coef2<=alpha, na.rm = T)
+# mean(pval_PRegs_onesided_coef2<=alpha, na.rm = T)
+
+##Paired regression sequential
+pval_PRegs_twosided_coef2 = rep(NA, ncol(dat$y))
+pval_PRegs_onesided_coef2 = rep(NA, ncol(dat$y))
 for(l in 1:ncol(dat$y)){
   print(l)
-  ww = cbind(dat$y[,l], dat$x)
-  perm_idx_X =  sapply(1:B, function(i) sample(1:args$n, args$n, replace = F))
-  bb = matrix(NA, ncol = 2, nrow = B)
-  for(b in 1:B){
-    wwb  = cbind(ww, dat$x[perm_idx_X[,b]])
-    tmp1 =lm(wwb~dat$Z+dat$Z[perm_idx_X[,b],,drop = D])
-    wwb = tmp1$residuals
-    bb[b,1] = sum(wwb[,1]*wwb[,2])/sum(wwb[,2]^2)
-    bb[b,2] = sum(wwb[,1]*wwb[,3])/sum(wwb[,3]^2)
-  }
-  pval_PRegs_twosided_coef2[l] =  (sum(abs(bb[,2])>=abs(bb[,1]))+1)/(B+1)
-  pval_PRegs_onesided_coef2[l] = 2*min((sum(bb[,2]>= bb[,1])+1)/(B+1),(sum(bb[,2] <= bb[,1])+1)/(B+1))
+  tmp1coef <- PREGjoint(y=dat$y[,l], x=dat$x, z=dat$Z, add_intercept = T, B = B, statType = "coef")$res
+  tmp1coef
+  pval_PRegs_twosided_coef2[l] =  tmp1coef$unsigned
+  pval_PRegs_onesided_coef2[l] = 2*min(tmp1coef$pos,tmp1coef$neg)
 }
-alpha = 0.2
-mean(pval_PRegs_twosided_coef2<=alpha, na.rm = T)
-mean(pval_PRegs_onesided_coef2<=alpha, na.rm = T)
-
-
+alpha = 0.05
+mean(pval_PRegs_twosided_coef2<=alpha)
+mean(pval_PRegs_onesided_coef2<=alpha)
+par(mfrow  = c(2,1))
+hist(pval_PRegs_twosided_coef2, breaks = 100)
+hist(pval_PRegs_onesided_coef2, breaks = 100)
 
 
 ##############################

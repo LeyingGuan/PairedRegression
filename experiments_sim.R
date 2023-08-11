@@ -57,7 +57,7 @@ for(it in 1:iter){
     dat$beta  = beta_gen(dat$x, dat$Z, dat$epsMat, power = as.numeric(args$S))
   }
   dat$y = y_gen(dat$x, dat$beta, dat$epsMat)
-  results[["pvalues"]][[it]] = sim_comparisons_singleSetting(dat, B = B, run_CPT=run_CPT)
+  results[["pvalues"]][[it]] = sim_comparisons_singleSetting(dat, B = B, run_CPT=args$CPT)
 
   print(apply(results[["pvalues"]][[it]]<=0.05,2,mean))
   #print(apply(results[["pvalues"]][[it]]<=0.05,2,mean))

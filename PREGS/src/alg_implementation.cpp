@@ -47,7 +47,7 @@ List permutation_PREGSseparate(const arma::vec& x, const arma::mat& Y, arma::mat
     arma::vec prodb0 = yresid_for_original.t() * xresid;
     arma::vec prodb =  yresid_for_perm0.t() * xresid_perm;
     yresid_for_original =yresid_for_original - U * (U.t() * yresid_for_original);
-    arma::vec yresid_for_perm = yresid_for_perm0 - Uperm * (Uperm.t() * yresid_for_perm0);
+    arma::mat yresid_for_perm = yresid_for_perm0 - Uperm * (Uperm.t() * yresid_for_perm0);
     //calculate F-stat
     arma::mat yresid_for_original_x(N, M, arma::fill::zeros);
     arma::mat yresid_for_perm_x(N, M, arma::fill::zeros);
@@ -138,10 +138,19 @@ List permutation_PREGSjoint(const arma::vec& x, const arma::mat& Y, const arma::
       }else{
         yresid_for_perm_x.col(m) = yresid.col(m) * 1.0;
       }
-      fstat_orginal(m) = arma::accu(arma::square(yresid.col(m)));
-      fstat_perm(m)= fstat_orginal(m) * 1.0;
-      fstat_orginal(m) -= arma::accu(arma::square(yresid_for_original_x.col(m)));
-      fstat_perm(m) -= arma::accu(arma::square(yresid_for_perm_x.col(m)));
+      double tmp01 = arma::accu(arma::square(yresid.col(m)));
+      double tmp02 = tmp01 * 1.0;
+      double tmp1 = arma::accu(arma::square(yresid_for_original_x.col(m)));
+      double tmp2 = arma::accu(arma::square(yresid_for_perm_x.col(m)));
+      fstat_orginal(m) = tmp01 - tmp1;
+      fstat_perm(m) = tmp02 - tmp2;
+      if(tmp1 > 0.0 && tmp2 > 0.0){
+        fstat_orginal(m) /= tmp1;
+        fstat_perm(m) /= tmp2;
+      }else if(tmp01 > 0.0 && tmp02 > 0.0){
+        fstat_orginal(m) /= tmp01;
+        fstat_perm(m) /= tmp02;
+      }
       if(fstat_perm(m) > fstat_orginal(m)){
         pvals(m) += 1;
       }else if(fstat_perm(m) == fstat_orginal(m)){

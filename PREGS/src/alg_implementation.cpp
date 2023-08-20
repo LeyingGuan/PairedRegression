@@ -25,6 +25,7 @@ arma::mat dcSVD(arma::mat & X) {
   return U0;
 }
 
+//' @export
 // [[Rcpp::export]]
 List permutation_PREGSjoint(const arma::vec& x, const arma::mat& Y, const arma::mat& Z,
                             const int B){
@@ -99,7 +100,8 @@ List permutation_PREGSjoint(const arma::vec& x, const arma::mat& Y, const arma::
                       Named("Cmat") = Ccube);
 }
 
-//[[Rcpp::export]]
+//' @export
+// [[Rcpp::export]]
 List PREGS_CI_table_construct(const arma::cube& Cmat){
   int M = Cmat.n_slices;
   int B = Cmat.n_rows;
@@ -108,8 +110,10 @@ List PREGS_CI_table_construct(const arma::cube& Cmat){
   arma::mat C2mat = Cmat.col(1);
   arma::mat C3mat = Cmat.col(2);
   arma::mat C4mat = Cmat.col(3);
-  arma::mat s = (C2mat - arma::sqrt(C2mat % C2mat - C1mat % (C3mat - C4mat))) / C1mat;
-  arma::mat u = (C2mat + arma::sqrt(C2mat % C2mat - C1mat % (C3mat - C4mat))) / C1mat;
+  arma::vec tmp_vec = C2mat % C2mat - C1mat % (C3mat - C4mat);
+  tmp_vec.elem(arma::find(tmp_vec < 0)).fill(0);
+  arma::mat s = (C2mat - arma::sqrt(tmp_vec)) / C1mat;
+  arma::mat u = (C2mat +arma::sqrt(tmp_vec)) / C1mat;
   
   Rcpp::List tmat_collection(M);
   
@@ -253,6 +257,8 @@ List PREGS_CI_table_construct(const arma::cube& Cmat){
 //                       Named("neg") = pvals_neg);
 // }
 // 
+
+//' @export
 // [[Rcpp::export]]
 List permutation_FL(const arma::vec& x, const arma::mat& Y, arma::mat& Z,
                     const int B){
@@ -319,6 +325,7 @@ List permutation_FL(const arma::vec& x, const arma::mat& Y, arma::mat& Z,
 }
 
 
+//' @export
 // [[Rcpp::export]]
 List permutation_vanilla(const arma::vec& x, const arma::mat& Y, arma::mat& Z,
                     const int B){

@@ -5,7 +5,7 @@ declare -a design_values=("AnovaBalance" "Gaussian" "Cauchy" "AnovaUnbalance")
 declare -a noise_values=("gaussian" "cauchy" "exponential" "multinomial")
 declare -a power_values=(0.0 0.9)
 declare -a n_values=(100 500)
-declare -a p_values=(2 5 20)
+declare -a p_values=(2 6 11 16 21)
 
 for design in "${design_values[@]}"
 do

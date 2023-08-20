@@ -3,9 +3,9 @@
 # Define the set of character values
 declare -a design_values=("AnovaBalance" "Gaussian" "Cauchy" "AnovaUnbalance" "Paired")
 declare -a noise_values=("gaussian" "cauchy" "exponential" "multinomial")
-declare -a power_values=(0.0 0.3 0.5 .7 0.9 .99)
+declare -a power_values=(0.0 0.3 0.5 0.7 0.9 0.99)
 declare -a n_values=(100)
-declare -a p_values=(2 5 15)
+declare -a p_values=(2 6 11 16 21)
 FILE=$1
 for design in "${design_values[@]}"
 do

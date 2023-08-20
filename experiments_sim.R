@@ -30,8 +30,8 @@ cat(messages[5], args$S, "\n")
 cat(messages[6], args$CPT, "\n")
 
 
-iter = 20; B = 2000; M = 2000
-set.seed(2024)
+iter = 50; B = 2000; M = 2000
+set.seed(2023)
 seeds = sample(1:100000, iter, replace = F)
 results = list()
 results[["pvalues"]] = list()

@@ -1,5 +1,6 @@
 library(PREGS)
 library(argparse)
+library(bcaboot)
 source("simulations_helpers.R")
 n=100
 parser <- ArgumentParser(description='Simulation settings for PREGS')
@@ -24,7 +25,8 @@ seeds = sample(1:100000, iter, replace = F)
 results = list()
 results[["coverage"]] = data.frame(matrix(NA, ncol = 3), nrow = iter)
 results[["length"]] =data.frame(matrix(NA, ncol = 3), nrow = iter)
-colnames(results[["coverage"]]) <- colnames(results[["length"]]) = c("Normal", "Bootstrap", "Inversion")
+colnames(results[["coverage"]]) = colnames(results[["length"]]) = c("Normal", "Bootstrap", "Inversion")
+
 
 alpha = 0.05
 

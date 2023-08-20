@@ -110,10 +110,10 @@ List PREGS_CI_table_construct(const arma::cube& Cmat){
   arma::mat C2mat = Cmat.col(1);
   arma::mat C3mat = Cmat.col(2);
   arma::mat C4mat = Cmat.col(3);
-  arma::vec tmp_vec = C2mat % C2mat - C1mat % (C3mat - C4mat);
-  tmp_vec.elem(arma::find(tmp_vec < 0)).fill(0);
-  arma::mat s = (C2mat - arma::sqrt(tmp_vec)) / C1mat;
-  arma::mat u = (C2mat +arma::sqrt(tmp_vec)) / C1mat;
+  arma::mat tmp_mat = C2mat % C2mat - C1mat % (C3mat - C4mat);
+  tmp_mat.elem(arma::find(tmp_mat < 0)).fill(0);
+  arma::mat s = (C2mat - arma::sqrt(tmp_mat)) / C1mat;
+  arma::mat u = (C2mat +arma::sqrt(tmp_mat)) / C1mat;
   
   Rcpp::List tmat_collection(M);
   

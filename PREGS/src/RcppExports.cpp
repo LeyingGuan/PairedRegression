@@ -11,20 +11,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// permutation_PREGSseparate
-List permutation_PREGSseparate(const arma::vec& x, const arma::mat& Y, arma::mat& Z, const int B);
-RcppExport SEXP _PREGS_permutation_PREGSseparate(SEXP xSEXP, SEXP YSEXP, SEXP ZSEXP, SEXP BSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< arma::mat& >::type Z(ZSEXP);
-    Rcpp::traits::input_parameter< const int >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(permutation_PREGSseparate(x, Y, Z, B));
-    return rcpp_result_gen;
-END_RCPP
-}
 // permutation_PREGSjoint
 List permutation_PREGSjoint(const arma::vec& x, const arma::mat& Y, const arma::mat& Z, const int B);
 RcppExport SEXP _PREGS_permutation_PREGSjoint(SEXP xSEXP, SEXP YSEXP, SEXP ZSEXP, SEXP BSEXP) {
@@ -36,6 +22,17 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP);
     Rcpp::traits::input_parameter< const int >::type B(BSEXP);
     rcpp_result_gen = Rcpp::wrap(permutation_PREGSjoint(x, Y, Z, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// PREGS_CI_table_construct
+List PREGS_CI_table_construct(const arma::cube& Cmat);
+RcppExport SEXP _PREGS_PREGS_CI_table_construct(SEXP CmatSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::cube& >::type Cmat(CmatSEXP);
+    rcpp_result_gen = Rcpp::wrap(PREGS_CI_table_construct(Cmat));
     return rcpp_result_gen;
 END_RCPP
 }

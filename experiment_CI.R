@@ -9,7 +9,6 @@ parser$add_argument("--S", type = "numeric", help = "signal/power [0,.99]")
 parser$add_argument("--D", type = "character", help = "design (AnovaBalance, Gaussian, Cauchy, CorGaussian,  AnovaUnbalance)")
 parser$add_argument("--E", type = "character", help = "noise/error (gaussian, cauchy, exponential,  multinomial)")
 args <- parser$parse_args()
-args$D ="Gaussian"; args$E ="gaussian"
 p = args$p
 sig = args$S
 cat( args$D, "\t", args$E, "\t", p, "\t", sig)
@@ -23,8 +22,8 @@ iter = 10; B = 2000; M = 2000
 set.seed(2024)
 seeds = sample(1:100000, iter, replace = F)
 results = list()
-results[["coverage"]] = data.frame(matrix(NA, ncol = 3), nrow = iter)
-results[["length"]] =data.frame(matrix(NA, ncol = 3), nrow = iter)
+results[["coverage"]] = data.frame(matrix(NA, ncol = 3, nrow = iter))
+results[["length"]] =data.frame(matrix(NA, ncol = 3, nrow = iter))
 colnames(results[["coverage"]]) = colnames(results[["length"]]) = c("Normal", "Bootstrap", "Inversion")
 
 

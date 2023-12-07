@@ -1,0 +1,26 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda deactivate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+sample size 100 
+num of features in Z 6 
+design AnovaBalance 
+noise/error gaussian 
+signal/power 0.3 
+run CPT TRUE 
+[1] "#########1############"

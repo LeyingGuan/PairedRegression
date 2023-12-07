@@ -35,9 +35,6 @@ sim_comparisons_singleSetting = function(dat, run_CPT=TRUE, B = 2000){
       pvals_collection[l,5]=  out0$pval[1]
     }
   }
-  # apply(pvals_collection<=0.05,2,mean)
-  # apply(pvals_collection<=0.01,2,mean)
-  # apply(pvals_collection<=0.001,2,mean)
 
   return(pvals_collection)
   

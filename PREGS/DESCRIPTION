@@ -7,7 +7,7 @@ Author: Leying Guan
 Maintainer: Leying Guan <leying.guan@yale.edu>
 Description: A distribution-free/theoretically guarantted conformal test for partial correlation
 License: GPL-3
-Imports: Rcpp (>= 1.0.10), MASS, RSpectra, gaoptim, plyr
+Imports: Rcpp (>= 1.0.10), MASS, RSpectra
 LinkingTo: Rcpp, RcppArmadillo
 Encoding: UTF-8
 RoxygenNote: 7.2.3

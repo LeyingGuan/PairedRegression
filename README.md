@@ -58,11 +58,10 @@ experiments_sim.R: The R script experiments_sim.R runs PALMRT (PREGS), CPT, RPT,
 Note that CPT and PRT algorithms require some other additional packages (for CPT, R package gaoptim for genetic algorithm is no longer available on R CRAN for R >=4.2.3, and manual installation is needed.) Below are the command lines used to generate all results related to the covarage and power comparison experiments.
 
 ```ruby
-' Data generation
+# Run experiments_sim.R for one setting
+## --n=sample size; --p=ncol(Z)+1 (suppose Z does not include intercept); --D=design; --E=noise distribution; --S=signal strength (measured by power), 0=null, 1=100% power; --CPT=if run CPT
+Rscript experiments_sim.R --n 100 --p 2 --D AnovaBalance --E gaussian --S 0.0 --CPT TRUE
 
-' Bulk job array creation and dSQ job running
-
-' Example of running experiments_sim.R for one setting
 ```
 
 

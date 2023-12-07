@@ -1,5 +1,56 @@
 library(PREGS)
 library(MASS)
+library(plyr)
+
+
+generatePermutations <- function(n, K){
+  ind <- head(sample(n), n - n %% (K+1))
+  mx <- matrix(ind, nrow=K+1)
+  perm_ind <- matrix(0, K, n)
+  for (r in 1:K){
+    perm_ind[r, ] <- plyr::mapvalues(1:n, mx, mx[c((r+1):(K+1), 1:r), ])
+  }
+  return(perm_ind)
+}
+
+# PRT (code modified from Wang et al 2023)
+RPT <- function(X, Y, Z, K=99){
+  n <- dim(X)[1]; p <- dim(X)[2]
+  if(!is.null(dim(Y))){
+    stat1 <- stat2 <- matrix(0,ncol=K, nrow = ncol(Y))
+      rep(0, K)
+  }else{
+    stat1 <- stat2 <- rep(0, K)
+  }
+
+  perm_ind <- generatePermutations(n, K)
+
+  for (r in 1:K){
+    idx <- perm_ind[r, ]  # P is a perm matrix with P[i, idx[i]] = 1
+    VtildeVtilde <- tryCatch({tmp <- cbind(X, X[idx,]); diag(n) - tmp %*% solve(t(tmp) %*% tmp, t(tmp))}, error=function(e){print("intertible error for tmp"); "error"})
+    if(identical(VtildeVtilde, "error")){
+      #there may be overlap between spaces of X and X[idx, ] or X may not be full rank
+      tmp <- svd(cbind(X, X[idx,]), nu=2*p)$u
+      VtildeVtilde <- diag(n) - tmp %*% t(tmp)
+    }
+    #vectors <- svd(tmp, nu=n)$u[, -(1:(2 * p))]
+    Vz <- as.vector(VtildeVtilde %*% Z)
+    if(is.null(dim(Y))){
+      stat1[r] <- as.numeric(sum(Vz * Y))
+      stat2[r] <- as.numeric(sum(Vz * Y[idx]))
+    }else{
+      stat1[,r] <- as.numeric(apply(Y, 2, function(z){sum(Vz*z)}))
+      stat2[,r] <- as.numeric(apply(Y, 2, function(z){sum(Vz*z[idx])}))
+    }
+  }
+  if(is.null(dim(stat1))){
+    stat1 = matrix(stat1,nrow = 1)
+    stat2 = matrix(stat2,nrow = 1)
+  }
+  pval <-sapply(1:nrow(stat1), function(i){ (sum(abs(stat2[i,]) >= abs(stat1[i,])) + 1) / (K+1)})
+  pval_theory <-sapply(1:nrow(stat1), function(i){ (sum(abs(stat2[i,]) >= min(abs(stat1[i,]))) + 1) / (K+1)})
+  return(list(pval=pval, pval_theory=pval_theory))
+}
 
 data_gen = function(n=100, p = 2, M = 2000, design = "AnovaBalance", noise = "gaussian",seed = 1, m =1){
   xZ = matrix(NA, ncol = p+1, nrow = n)
@@ -116,10 +167,9 @@ y_gen = function(x, beta, epsMat){
 #source("/Users/lg689/Downloads/CPT-master/code/expr_functions.R")
 sim_comparisons_singleSetting = function(dat, run_CPT=TRUE, B = 2000){
   
-  pvals_collection = data.frame(matrix(NA, ncol = 5+1, nrow = ncol(dat$y)))
+  pvals_collection = data.frame(matrix(NA, ncol = 5, nrow = ncol(dat$y)))
   colnames(pvals_collection) = c("Ftest", "PERMtest", 
-                                 "FLtest", "PREGStest","PREGStestII",
-                                 "CPT")
+                                 "FLtest", "PAMLRT","CPT")
   ###t test
   fitted_ttest = summary(lm(dat$y~dat$x+dat$Z))
   pvals_collection[,1] = as.vector(sapply(fitted_ttest, function(z) z$coefficients[2,4]))
@@ -130,8 +180,7 @@ sim_comparisons_singleSetting = function(dat, run_CPT=TRUE, B = 2000){
   pvals_collection[,3] =  FLtest(x= dat$x, y = dat$y, z=dat$Z, B = B)$res$unsigned
   
   ## PRegs
-  pvals_collection[,4] = PREGtest(x= dat$x, y = dat$y, z=dat$Z, B = B, mode = "separate")$res$unsigned
-  pvals_collection[,5] = PREGtest(x= dat$x, y = dat$y, z=dat$Z, B = B, mode = "joint")$res$unsigned
+  pvals_collection[,4] = PREGtest(x= dat$x, y = dat$y, z=dat$Z, B = B)$res$unsigned
 
 
   ##cyclic permutations
@@ -144,7 +193,7 @@ sim_comparisons_singleSetting = function(dat, run_CPT=TRUE, B = 2000){
     ordering = res1$ordering
     for(l in 1:ncol(dat$y)){
       out0 = CPT(dat$y[,l], X, ordering = ordering,testinds = 1,alpha = 0.05,returnCI = FALSE)
-      pvals_collection[l,6]=  out0$pval[1]
+      pvals_collection[l,5]=  out0$pval[1]
     }
   }
   # apply(pvals_collection<=0.05,2,mean)

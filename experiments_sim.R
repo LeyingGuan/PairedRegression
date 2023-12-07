@@ -58,8 +58,6 @@ for(it in 1:iter){
   results[["pvalues"]][[it]] = sim_comparisons_singleSetting(dat, B = B, run_CPT=args$CPT)
 
   print(apply(results[["pvalues"]][[it]]<=0.05,2,mean))
-  #print(apply(results[["pvalues"]][[it]]<=0.05,2,mean))
-  #print(apply(results[["pvalues"]][[it]]<=0.05,2,mean))
   saveRDS(results, file = paste0(path,result_file_name))
   
   #tmp = sim_comparisons_singleSetting(dat, B = B, run_CPT=args$CPT)

@@ -21,11 +21,24 @@ install_github("LeyingGuan/PairedRegression/PREGS")
 
 ## Comparisons of coverages and powers using different methods
 
-experiments_sim.R: The R script experiments_sim.R runs PALMRT (PREGS), CPT, RPT, Ftest, FLtest, PERMtest for a given design, noise distribution, feature dimension, signal strength.
+CPT_RPT.R: codes for running CPT and RPT (modified code from the original CPT and RPT articles).
 
 simulaiton_helpers.R: Helper functions for data generation ( design, noise distribution, feature dimension, signal strength), runing experiment in experiments_sim.R.
 
-CPT_RPT.R: codes for running CPT and RPT (modified code from the original CPT and RPT articles).
+experiments_sim.R: The R script experiments_sim.R runs PALMRT (PREGS), CPT, RPT, Ftest, FLtest, PERMtest for a given design, noise distribution, feature dimension, signal strength. 
+
+Below are the command lines used to generate all results related to the covarage and power comparison experiments.
+
+```ruby
+' Data generation
+
+' Bulk job array creation and dSQ job running
+
+' Example of running experiments_sim.R for one setting
+```
+
+
+
 
 ## Confidence interval comparisons.
 

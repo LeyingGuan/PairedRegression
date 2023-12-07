@@ -15,7 +15,7 @@ cat( args$D, "\t", args$E, "\t", p, "\t", sig)
 
 result_file_name = paste("CIevaluation",args$D, args$E, args$n, args$p, "signal", args$S*100,sep="_")
 result_file_name = paste0(result_file_name, ".Rdata")
-path = "/home/lg689/project/project/PairedRegression/Results/"
+path = "/home/lg689/project/project/PairedRegression/Results/CIevaluation/"
 
 
 iter = 10; B = 2000; M = 2000

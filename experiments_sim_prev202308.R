@@ -21,7 +21,6 @@ parser$add_argument("--S", type = "numeric", help = "signal/power [0,.99]")
 parser$add_argument("--CPT", type = "logical", help = "If run CPT")
 args <- parser$parse_args()
 #args$D = "Cauchy"; args$E = "multinomial"; args$S=0; args$p=20;args$n=100
-##args$D = "Cauchy"; args$E = "gaussian"; args$S=0.8; args$p=2;args$n=100; args$CPT = FALSE
 
 cat(messages[1], args$n, "\n")
 cat(messages[2], args$p, "\n")
@@ -45,7 +44,7 @@ if(args$CPT){
 }else{
   result_file_name=paste0(result_file_name, "_", "woCPT",".Rdata")
 }
-path = "/home/lg689/project/project/PairedRegression/Results/CoveragePower/"
+path = "/home/lg689/project/project/PairedRegression/Results/"
 
 for(it in 1:iter){
   print(paste0("#########", it, "############"))
@@ -58,18 +57,10 @@ for(it in 1:iter){
   dat$y = y_gen(dat$x, dat$beta, dat$epsMat)
   results[["pvalues"]][[it]] = sim_comparisons_singleSetting(dat, B = B, run_CPT=args$CPT)
 
-  #RPT
-  X = dat$Z
-  pvals <- RPT(X=X, Y = dat$y, Z=dat$x)
-  results[["pvalues"]][[it]]$RPT = pvals$pval_theory
-  results[["pvalues"]][[it]]$RPTem = pvals$pval
-
-  pvals <- RPT(X=X, Y = dat$y, Z=dat$x, K  = 200)
-
-  results[["pvalues"]][[it]]$RPT_highK = pvals$pval_theory
-  results[["pvalues"]][[it]]$RPTem_highK = pvals$pval
   print(apply(results[["pvalues"]][[it]]<=0.05,2,mean))
   saveRDS(results, file = paste0(path,result_file_name))
-
+  
+  #tmp = sim_comparisons_singleSetting(dat, B = B, run_CPT=args$CPT)
+  #apply(tmp <= 0.05, 2, mean)
 }
 

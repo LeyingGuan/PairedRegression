@@ -19,3 +19,13 @@ install_github("LeyingGuan/PairedRegression/PREGS")
 
 ## Manuscript reproducibility
 
+## Comparisons of coverages and powers using different methods
+
+experiments_sim.R: The R script experiments_sim.R runs PALMRT (PREGS), CPT, RPT, Ftest, FLtest, PERMtest for a given design, noise distribution, feature dimension, signal strength.
+
+simulaiton_helpers.R: Helper functions for data generation ( design, noise distribution, feature dimension, signal strength), runing experiment in experiments_sim.R.
+
+CPT_RPT.R: codes for running CPT and RPT (modified code from the original CPT and RPT articles).
+
+## Confidence interval comparisons.
+

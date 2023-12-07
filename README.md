@@ -18,25 +18,30 @@ dataGen.R: generate synthetic data.
 
 ```ruby
 ## M: dimension of y ( M independent realization of n noise)
+require(PREGS)
+source("dataGen.R")
 dat = data_gen(n=100, p = 2, M = 2000, design = "AnovaBalance", noise = "gaussian",seed = 1)
 
 ## add signal to y
-dat$beta  = beta_gen(dat$x, dat$Z, dat$epsMat, power = .9)
+dat$beta  = beta_gen(dat, power = .9)
 dat$y = y_gen(dat$x, dat$beta, dat$epsMat)
 
 B = 2000
 ## x: n by 1; y: n by M; Z: n by p (note that one of the p column is the vector of 1's, so there are actually (p -1) covariates to be adjusted for).
 PREGout = PREGtest(x= dat$x, y = dat$y, z=dat$Z, B = B)
 
-## pvalues for unsigned test (F-test), signed version based on coefficients is also available
+## pvalues for unsigned test (F-test), signed version based on coefficients is also available, but the CI construction is not yet implemented
 pvals = PREGout$res$unsigned
 
 ## Construct CI based on inversion
+### Cmat is the B by 4 by M Cmatrix in the CI section [PALMRT paper], used for constructing CI for each reliazation of y[,l], l=1,...,M
+### CItable_list is a length M list, with element in each list correponds to  CI-level lookup table for one (x, Z, y[,l]). The table contains many intermediate quantities as described in the paper.
 
 CItable_list = PREGS_CI_table(PREGout$res$Cmat)
 
+###construct CI for a given level; CI_PREG_invert is M by 2 (lower boundary, higher boundary)
+alpha = 0.05
 CI_PREG_invert = PREG_CI_construct(CItable_list, alpha = alpha) 
-
 
 ```
 

@@ -55,14 +55,24 @@ simulaiton_helpers.R: Helper functions for data generation ( design, noise distr
 
 experiments_sim.R: The R script experiments_sim.R runs PALMRT (PREGS), CPT, RPT, Ftest, FLtest, PERMtest for a given design, noise distribution, feature dimension, signal strength. 
 
-Note that CPT and PRT algorithms require some other additional packages (for CPT, R package gaoptim for genetic algorithm is no longer available on R CRAN for R >=4.2.3, and manual installation is needed.) Below are the command lines used to generate all results related to the covarage and power comparison experiments.
+Note that CPT and PRT algorithms require some other additional packages (for CPT, R package gaoptim for genetic algorithm is no longer available on R CRAN for R >=4.2.3, and manual installation is needed.) 
 
+### Run experiments_sim.R for one setting
 ```ruby
-# Run experiments_sim.R for one setting
 ## --n=sample size; --p=ncol(Z)+1 (suppose Z does not include intercept); --D=design; --E=noise distribution; --S=signal strength (measured by power), 0=null, 1=100% power; --CPT=if run CPT
 Rscript experiments_sim.R --n 100 --p 2 --D AnovaBalance --E gaussian --S 0.0 --CPT TRUE
-
 ```
+### Run all analysis
+Below are the command lines used to generate all results related to the covarage and power comparison experiments.
+```ruby
+## create job list
+bash job_creation_wiCPT.sh experiments_main_job.txt
+
+## large-scale experiments with dSQ
+dsq --job-file experiments_main_job.txt [....other arguments]
+dsq-experiments_main_job-2023-12-06.sh
+```
+## Experiments for CI quality evaluation
 
 
 

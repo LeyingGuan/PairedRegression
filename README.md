@@ -72,6 +72,8 @@ bash job_creation_wiCPT.sh experiments_main_job.txt
 dsq --job-file experiments_main_job.txt [....other arguments]
 dsq-experiments_main_job-2023-12-06.sh
 ```
+### Figure Creation
+
 ## Experiments for CI quality evaluation
 
 
